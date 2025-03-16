@@ -55,18 +55,25 @@ function editPosition(button) {
 }
 
 function deletePosition(button) {
-  button.closest("tr").remove();
-  updateIDs();
+  const row = button.closest("tr");
+  if (row) {
+    const maChucVu = row.cells[0].innerText; // Lấy mã chức vụ cần xóa
+    deletePositionFromDB(maChucVu); // Gửi yêu cầu xóa từ DB
+    row.remove(); // Xóa khỏi giao diện
+    updateIDs(); // Cập nhật lại ID
+  }
 }
 
-function updateIDs() {
+
+function updateIDs(button) {
+  // wtf code is this ? 
   const rows = document.querySelectorAll("#positions-body tr");
   rows.forEach((row, index) => {
     row.cells[0].innerText = `CV${String(index + 1).padStart(2, "0")}`;
   });
   const row = button.closest("tr");
   const maChucVu = row.cells[0].innerText;
-  deletePositionFromDB(maChucVu);
+
   row.remove();
 }
 

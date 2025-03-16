@@ -72,6 +72,8 @@ function updatePosition($conn) {
     }
 }
 
+
+
 function deletePosition($conn) {
     $data = json_decode(file_get_contents("php://input"), true);
     $maChucVu = $data['maChucVu'];

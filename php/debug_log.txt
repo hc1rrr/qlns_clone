@@ -112,3 +112,9 @@ Array
     [email] => tranthang181103k@gmail.com1
     [password] => 2222222
 )
+Array
+(
+    [fullname] => Trần Trần Đức
+    [email] => tranthang181103k@gmail.com
+    [password] => 111111
+)
