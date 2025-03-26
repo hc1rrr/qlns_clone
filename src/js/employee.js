@@ -4,34 +4,23 @@ fetch("sidebar.html")
     document.getElementById("sidebar").innerHTML = data;
   });
 
+
   document.addEventListener("DOMContentLoaded", function () {
     const salaryInput = document.getElementById("employee-salary");
-
     salaryInput.addEventListener("input", function (e) {
         let value = salaryInput.value;
-
-        // Loại bỏ tất cả ký tự không phải số
         value = value.replace(/[^0-9]/g, "");
-
-        // Chia giá trị thành từng nhóm 3 chữ số
         let formattedValue = "";
         let length = value.length;
-
-        // Lặp từ cuối chuỗi để thêm dấu phẩy
         for (let i = length; i > 0; i -= 3) {
             formattedValue = value.substring(i - 3, i) + (formattedValue ? "," + formattedValue : "");
         }
-
-        // Cập nhật lại giá trị vào input
         salaryInput.value = formattedValue;
     });
 });
 
 
 
-
-
-// Mở modal để thêm hoặc chỉnh sửa nhân viên
 function openEmployeeModal(employee = null, row = null) {
     const modalHtml = `
         <div class="modal" id="employee-modal">
@@ -83,7 +72,6 @@ function openEmployeeModal(employee = null, row = null) {
     document.body.insertAdjacentHTML("beforeend", modalHtml);
 }
 
-// Đóng modal
 function closeEmployeeModal() {
     const modal = document.getElementById("employee-modal");
     if (modal) {
@@ -91,35 +79,24 @@ function closeEmployeeModal() {
     }
 }
 
-// Lưu nhân viên mới
 function saveEmployee() {
     const id = document.getElementById("employee-id").value;
     const name = document.getElementById("employee-name").value;
-
-    // Lấy giới tính
     const gender = document.querySelector('input[name="gender"]:checked');
     const genderValue = gender ? gender.value : "";
-
     const dob = document.getElementById("employee-dob").value;
     const address = document.getElementById("employee-address").value;
     const email = document.getElementById("employee-email").value;
     const phone = document.getElementById("employee-phone").value;
-    
-    // Lấy chức vụ
-    const position = document.getElementById("employee-position").value;
-    
-    // Lấy phòng ban
+    const position = document.getElementById("employee-position").value;  
     const department = document.getElementById("employee-department").value;
-    
     const salary = document.getElementById("employee-salary").value;
 
-    // Kiểm tra các trường bắt buộc
     if (!id || !name || !genderValue || !email || !phone) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
 
-    // Tạo dòng nhân viên mới
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
         <td>${id}</td>
@@ -142,13 +119,14 @@ function saveEmployee() {
     closeEmployeeModal();
 }
 
-// Xóa nhân viên
+
+
 function deleteEmployee(button) {
     const row = button.closest("tr");
     row.remove();
 }
 
-// Chỉnh sửa nhân viên
+
 function editEmployee(button) {
     const row = button.closest("tr");
     const cells = row.getElementsByTagName("td");
