@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const salaryPeriod = row.cells[2].innerText; 
         const periodParts = salaryPeriod.split(' - ');
         const startDateStr = periodParts[0];
-        const endDateStr = periodParts[1]; 
+        const endDateStr = periodParts[1];
         const startDate = new Date(startDateStr.split('/').reverse().join('-')); 
         const endDate = new Date(endDateStr.split('/').reverse().join('-'));
         const workingDays = countWorkingDays(startDate, endDate);
