@@ -1,22 +1,22 @@
 === BẮT ĐẦU DEBUG MỚI ===
 Số nhân viên: 20
-Số chức vụ: 6
-Số phòng ban: 4
+Số chức vụ: 7
+Số phòng ban: 3
 Danh sách chức vụ: Array
 (
     [Giám đốc] => 1
     [Trưởng phòng] => 4
     [Nhân viên] => 8
     [Thực tập sinh] => 4
-    [Cộng tác viên] => 0
-    [vua] => 0
+    [Kế toán] => 3
+    [CV07] => 0
+    [DOOO] => 0
 )
 
 Danh sách phòng ban: Array
 (
-    [Phòng Hành chính] => 5
-    [Phòng Kỹ thuật] => 5
-    [Phòng Kinh doanh] => 5
-    [Phòng Kế toán] => 5
+    [Phòng đào tạo] => 0
+    [dcadasdas] => 0
+    [sadasdasdas] => 0
 )
 
