@@ -4,35 +4,38 @@ fetch("sidebar.html")
     document.getElementById("sidebar").innerHTML = data;
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
+
+  document.addEventListener("DOMContentLoaded", function () { 
     const salaryInput = document.getElementById("employee-salary");
-
-    salaryInput.addEventListener("input", function (e) {
+    salaryInput.addEventListener("focus", function (e) {
+        console.log('da focus input');
+        
         let value = salaryInput.value;
-
-        // Loại bỏ tất cả ký tự không phải số
+        console.log('value hể ', value);
+        
         value = value.replace(/[^0-9]/g, "");
-
-        // Chia giá trị thành từng nhóm 3 chữ số
         let formattedValue = "";
         let length = value.length;
-
-        // Lặp từ cuối chuỗi để thêm dấu phẩy
         for (let i = length; i > 0; i -= 3) {
             formattedValue = value.substring(i - 3, i) + (formattedValue ? "," + formattedValue : "");
         }
-
-        // Cập nhật lại giá trị vào input
         salaryInput.value = formattedValue;
     });
 });
 
 
-
-
-
-// Mở modal để thêm hoặc chỉnh sửa nhân viên
 function openEmployeeModal(employee = null, row = null) {
+    function realValue(value) {
+        console.log('value here ', value);
+        
+        value = value.replace(/[^0-9]/g, "");
+        let formattedValue = "";
+        let length = value.length;
+        for (let i = length; i > 0; i -= 3) {
+            formattedValue = value.substring(i - 3, i) + (formattedValue ? "," + formattedValue : "");
+        }
+        return formattedValue;
+    }
     const modalHtml = `
         <div class="modal" id="employee-modal">
             <div class="modal-content">
@@ -75,7 +78,7 @@ function openEmployeeModal(employee = null, row = null) {
                     <option value="Nhân sự" ${employee && employee.department === 'Nhân sự' ? 'selected' : ''}>Nhân sự</option>
                 </select>
                 
-                <input type="text" id="employee-salary" placeholder="Lương" value="${employee ? employee.salary : ""}">
+                <input type="text" id="employee-salary" placeholder="Lương" value="${employee ? realValue(employee.salary) : ""}">
                 <button class="save-btn" onclick="${employee ? `updateEmployee(${row.rowIndex})` : "saveEmployee()"}">${employee ? "Cập nhật" : "Lưu"}</button>
             </div>
         </div>`;
@@ -83,7 +86,6 @@ function openEmployeeModal(employee = null, row = null) {
     document.body.insertAdjacentHTML("beforeend", modalHtml);
 }
 
-// Đóng modal
 function closeEmployeeModal() {
     const modal = document.getElementById("employee-modal");
     if (modal) {
@@ -91,35 +93,24 @@ function closeEmployeeModal() {
     }
 }
 
-// Lưu nhân viên mới
 function saveEmployee() {
     const id = document.getElementById("employee-id").value;
     const name = document.getElementById("employee-name").value;
-
-    // Lấy giới tính
     const gender = document.querySelector('input[name="gender"]:checked');
-    const genderValue = gender ? gender.value : "";
-
+    const genderValue = gender ? gender.value : ""; //value = '', 0, null, undefined
     const dob = document.getElementById("employee-dob").value;
     const address = document.getElementById("employee-address").value;
     const email = document.getElementById("employee-email").value;
     const phone = document.getElementById("employee-phone").value;
-    
-    // Lấy chức vụ
-    const position = document.getElementById("employee-position").value;
-    
-    // Lấy phòng ban
+    const position = document.getElementById("employee-position").value;  
     const department = document.getElementById("employee-department").value;
-    
     const salary = document.getElementById("employee-salary").value;
 
-    // Kiểm tra các trường bắt buộc
     if (!id || !name || !genderValue || !email || !phone) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
 
-    // Tạo dòng nhân viên mới
     const newRow = document.createElement("tr");
     newRow.innerHTML = `
         <td>${id}</td>
@@ -142,17 +133,29 @@ function saveEmployee() {
     closeEmployeeModal();
 }
 
-// Xóa nhân viên
+
+
 function deleteEmployee(button) {
     const row = button.closest("tr");
     row.remove();
 }
 
-// Chỉnh sửa nhân viên
+
 function editEmployee(button) {
     const row = button.closest("tr");
     const cells = row.getElementsByTagName("td");
-
+    function realValue(value) {
+        console.log('value hể ', value);
+        
+        value = value.replace(/[^0-9]/g, "");
+        let formattedValue = "";
+        let length = value.length;
+        for (let i = length; i > 0; i -= 3) {
+            formattedValue = value.substring(i - 3, i) + (formattedValue ? "," + formattedValue : "");
+        }
+        return formattedValue;
+    }
+   
     const employee = {
         id: cells[0].textContent,
         name: cells[1].textContent,
@@ -163,7 +166,8 @@ function editEmployee(button) {
         phone: cells[6].textContent,
         position: cells[7].textContent,
         department: cells[8].textContent,
-        salary: cells[9].textContent.trim().replace(/[^0-9]/g, '') // Remove all non-numeric characters
+        salary: realValue(cells[9].textContent.trim().replace(/[^0-9]/g, '')) // Remove all non-numeric characters
+        // salary: '01'
     };
 
     openEmployeeModal(employee, row);
@@ -174,7 +178,17 @@ function updateEmployee(rowIndex) {
     const table = document.getElementById("employee-body");
     const row = table.rows[rowIndex - 1];
     const cells = row.getElementsByTagName("td");
-
+    function realValue(value) {
+        console.log('value hể ', value);
+        
+        value = value.replace(/[^0-9]/g, "");
+        let formattedValue = "";
+        let length = value.length;
+        for (let i = length; i > 0; i -= 3) {
+            formattedValue = value.substring(i - 3, i) + (formattedValue ? "," + formattedValue : "");
+        }
+        return formattedValue;
+    }
     cells[0].textContent = document.getElementById("employee-id").value;
     cells[1].textContent = document.getElementById("employee-name").value;
     cells[2].textContent = document.querySelector('input[name="gender"]:checked').value;
@@ -186,7 +200,9 @@ function updateEmployee(rowIndex) {
     cells[8].textContent = document.getElementById("employee-department").value;
     let salary = document.getElementById("employee-salary").value.replace(/[^0-9]/g, "");
     salary = salary.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
-    cells[9].textContent = salary;
+    console.log('realValue(salary)', realValue(salary));
+    
+    cells[9].textContent = realValue(salary);
 
 
     closeEmployeeModal();
