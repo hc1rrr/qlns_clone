@@ -6,12 +6,44 @@
     <title>Quản lý nhân sự</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/sidebar2.css">
+    <style>
+        .logout-btn {
+          margin-left: 15px;
+          width: 120px;
+          height: 40px;
+          background: linear-gradient(145deg, #84cc07, #c6e403);
+          color: white;
+          font-size: 15px;
+          font-weight: bold;
+          font-family: sans-serif;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+          transition: all 0.2s ease;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+      
+        .logout-btn:hover {
+          background: linear-gradient(145deg, #eff703, #ee8c04);
+          transform: translateY(-2px);
+          box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.3);
+        }
+      
+        .logout-btn:active {
+          transform: translateY(0);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+      </style>
 </head>
 <body>
     <div class="topbar">
         <img src="https://static.ybox.vn/2024/8/4/1722486286062-Logo-Sonat.png" alt="Logo" class="logo">
         <span class="company-name">SONAT GAME STUDIO</span>
         <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" alt="" class="avatar">
+        <a href="login.html">
+            <button class="logout-btn" style="margin-left: 15px;width: 100px;height: 30px;">Đăng xuất</button>
+          </a>   
     </div>
 
     <div class="sidebar">

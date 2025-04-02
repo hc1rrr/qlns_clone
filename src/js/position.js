@@ -163,3 +163,18 @@ function deletePositionFromDB(maChucVu) {
 }
 
 document.addEventListener("DOMContentLoaded", fetchPositions);
+
+
+
+// let hienThiChucVu = true;
+
+// function closeModalChucVu() {
+//   if (hienThiChucVu) {
+//     document.getElementById("chucvu-modal").style.display = "none";
+//     hienThiChucVu = !hienThiChucVu;
+//   } else {
+//     document.getElementById("chucvu-modal").style.display = "block";
+
+//     hienThiChucVu = !hienThiChucVu;
+//   }
+// }
