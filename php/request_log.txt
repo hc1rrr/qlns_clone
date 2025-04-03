@@ -1,0 +1,76 @@
+Action: get
+Request Data: 
+Action: delete
+Request Data: {"maChamCong":"NV01"}
+Delete Attendance Data: {"maChamCong":"NV01"}
+Action: get
+Request Data: 
+Action: delete
+Request Data: {"maChamCong":"NV01"}
+Delete Attendance Data: {"maChamCong":"NV01"}
+Action: get
+Request Data: 
+Action: delete
+Request Data: {"maChamCong":"CC04"}
+Delete Attendance Data: {"maChamCong":"CC04"}
+Action: get
+Request Data: 
+Action: delete
+Request Data: {"maChamCong":"CC04"}
+Delete Attendance Data: {"maChamCong":"CC04"}
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Trần Thị Bú","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Tr\u1ea7n Th\u1ecb B\u00fa","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Trần Thị Bú","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Tr\u1ea7n Th\u1ecb B\u00fa","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Trần Văn C","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Tr\u1ea7n V\u0103n C","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"fsdf","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"fsdf","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"08:15:00","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"20:22","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"20:22","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"08:22","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Update Attendance Data: {"maChamCong":"CC02","tenPhongBan":"Mr Pip","thoiGianVao":"08:22","thoiGianRa":"17:15:00","date":"2024-02-25"}
+Action: get
+Request Data: 
+Action: update
+Request Data: {"maChamCong":"CC06","tenPhongBan":"Nguyễn Văn A","thoiGianVao":"08:00:00","thoiGianRa":"19:30:00","date":"2025-03-26"}
+Update Attendance Data: {"maChamCong":"CC06","tenPhongBan":"Nguy\u1ec5n V\u0103n A","thoiGianVao":"08:00:00","thoiGianRa":"19:30:00","date":"2025-03-26"}
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: get
+Request Data: 
+Action: get
+Request Data: 

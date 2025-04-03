@@ -37,65 +37,14 @@ function saveAttendance() {
     return;
   }
 
-  const morningStart = new Date(`${date} 08:00`);
-  const morningDeadline = new Date(`${date} 09:00`);
-  const morningEnd = new Date(`${date} 12:00`);
-
-  const afternoonStart = new Date(`${date} 13:00`);
-  const afternoonDeadline = new Date(`${date} 14:00`);
-  const afternoonEnd = new Date(`${date} 17:00`);
-  const overtimeStart = new Date(`${date} 17:00`);
-
-  const timeIn = new Date(`${date} ${thoiGianVao}`);
-  const timeOut = new Date(`${date} ${thoiGianRa}`);
-
-  let workingHours = 0;
-  let overtimeHours = 0;
-
-  if (timeIn <= morningDeadline && timeOut >= morningEnd) {
-    workingHours += 4;
-  }
-
-  if (timeIn <= afternoonDeadline && timeOut >= afternoonEnd) {
-    workingHours += 4;
-  }
-
-  if (timeOut > overtimeStart) {
-    overtimeHours = (timeOut - overtimeStart) / (1000 * 60 * 60);
-  }
-
   if (currentEditRow) {
-    currentEditRow.cells[1].innerText = tenPhongBan;
-    currentEditRow.cells[2].innerText = thoiGianVao;
-    currentEditRow.cells[3].innerText = thoiGianRa;
-    currentEditRow.cells[4].innerText = date;
-    currentEditRow.cells[5].innerText = `${workingHours.toFixed(0)} giờ`;
-    currentEditRow.cells[6].innerText = `${overtimeHours.toFixed(0)} giờ`;
-    currentEditRow = null;
+    const maChamCong = currentEditRow.getAttribute("data-maChamCong");  // Lấy MaChamCong từ data attribute
+    updateAttendance(maChamCong, tenPhongBan, thoiGianVao, thoiGianRa, date);
   } else {
-    const newRow = `<tr>
-                        <td>NV${String(
-                          document.querySelectorAll("#attendances-body tr")
-                            .length + 1
-                        ).padStart(2, "0")}</td>
-                        <td>${tenPhongBan}</td>
-                        <td>${thoiGianVao}</td>
-                        <td>${thoiGianRa}</td>
-                        <td>${date}</td>
-                        <td>${workingHours.toFixed(0)} giờ</td>
-                        <td>${overtimeHours.toFixed(0)} giờ</td>
-                        <td>
-                            <button class="edit-btn" onclick="editAttendance(this)">Sửa</button>
-                            <button class="delete-btn" onclick="deleteAttendance(this)">Xóa</button>
-                        </td>
-                    </tr>`;
-
-    document
-      .getElementById("attendances-body")
-      .insertAdjacentHTML("beforeend", newRow);
+    addAttendance(tenPhongBan, thoiGianVao, thoiGianRa, date);
   }
+
   closeModal();
-  updateIDs();
 }
 
 function editAttendance(button) {
@@ -107,17 +56,115 @@ function editAttendance(button) {
   document.getElementById("thoiGianRa").value = cells[3].innerText;
   document.getElementById("date").value = cells[4].innerText;
 
+  // Lấy MaChamCong từ thuộc tính data-maChamCong của thẻ tr
+  const maChamCong = currentEditRow.getAttribute("data-maChamCong");
+
+  // Gửi MaChamCong để cập nhật
   openModal();
 }
 
 function deleteAttendance(button) {
-  button.closest("tr").remove();
-  updateIDs();
+  const row = button.closest("tr");
+  // Lấy MaChamCong từ thuộc tính data-maChamCong của thẻ tr
+  const maChamCong = row.getAttribute("data-maChamCong");
+
+  if (confirm("Bạn có chắc chắn muốn xóa?")) {
+    deleteAttendanceFromDB(maChamCong);
+    row.remove();
+  }
 }
 
-function updateIDs() {
-  const rows = document.querySelectorAll("#attendances-body tr");
-  rows.forEach((row, index) => {
-    row.cells[0].innerText = `NV${String(index + 1).padStart(2, "0")}`;
-  });
+function calculateWorkHours(vao, ra) {
+  if (!vao || !ra) {
+    return "N/A";
+  }
+
+  const timeIn = new Date(`1970-01-01T${vao}Z`);
+  const timeOut = new Date(`1970-01-01T${ra}Z`);
+
+  if (isNaN(timeIn) || isNaN(timeOut)) {
+    return "N/A";
+  }
+
+  const diff = (timeOut - timeIn) / 1000 / 60 / 60;
+
+  if (diff < 0) {
+    return "N/A";
+  }
+
+  return diff.toFixed(2);
 }
+
+function loadAttendances() {
+  fetch("http://localhost/qlns_clone/php/getAttendance.php?action=get")
+    .then((response) => response.json())
+    .then((data) => {
+      const tbody = document.getElementById("attendances-body");
+      tbody.innerHTML = ""; // Xóa các dòng cũ
+
+      data.forEach((attendance) => {
+        const workHours = calculateWorkHours(attendance.GioVao, attendance.GioRa);
+
+        // Thêm MaChamCong vào thuộc tính data-maChamCong của thẻ tr
+        const row = `<tr data-maChamCong="${attendance.MaChamCong}">
+                        <td>${attendance.MaNhanVien}</td> <!-- Hiển thị Mã NV -->
+                        <td>${attendance.TenNhanVien}</td> <!-- Hiển thị Tên NV -->
+                        <td>${attendance.GioVao}</td>
+                        <td>${attendance.GioRa}</td>
+                        <td>${attendance.Ngay}</td>
+                        <td>${workHours} giờ</td>
+                        <td>${attendance.TangCa}</td>
+                        <td>
+                            <button class="edit-btn" onclick="editAttendance(this)">Sửa</button>
+                            <button class="delete-btn" onclick="deleteAttendance(this)">Xóa</button>
+                        </td>
+                    </tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+    })
+    .catch((error) => console.error("Lỗi khi tải dữ liệu chấm công:", error));
+}
+
+function updateAttendance(maChamCong, tenPhongBan, thoiGianVao, thoiGianRa, date) {
+  fetch("http://localhost/qlns_clone/php/getAttendance.php?action=update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      maChamCong: maChamCong,
+      tenPhongBan: tenPhongBan,
+      thoiGianVao: thoiGianVao,
+      thoiGianRa: thoiGianRa,
+      date: date,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        loadAttendances();
+      } else {
+        console.error("Lỗi khi cập nhật chấm công:", data.message);
+      }
+    })
+    .catch((error) => console.error("Lỗi khi cập nhật chấm công:", error));
+}
+
+function deleteAttendanceFromDB(maChamCong) {
+  fetch("http://localhost/qlns_clone/php/getAttendance.php?action=delete", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ maChamCong: maChamCong }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data.success) {
+        console.error("Lỗi khi xóa chấm công:", data.message);
+      }
+    })
+    .catch((error) => console.error("Lỗi khi xóa chấm công:", error));
+}
+
+document.addEventListener("DOMContentLoaded", loadAttendances);

@@ -202,6 +202,31 @@ Array
 🔹 Dữ liệu nhận được từ HTML:
 Array
 (
+<<<<<<< HEAD
+=======
+    [email] => shinntung41@gmail.com
+    [password] => dsad
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'shinntung41@gmail.com' AND MatKhau = 'dsad'
+🔹 Số dòng tìm thấy: 0
+❌ Đăng nhập thất bại: Email hoặc mật khẩu không đúng!
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => shinntung41@gmail.com
+    [password] => dsaddsasd
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'shinntung41@gmail.com' AND MatKhau = 'dsaddsasd'
+🔹 Số dòng tìm thấy: 0
+❌ Đăng nhập thất bại: Email hoặc mật khẩu không đúng!
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+>>>>>>> 6be29a9038e96b65cbda498682b11eb5d1c3ce5d
     [email] => admin@sonat.com
     [password] => admin123
 )
@@ -209,3 +234,159 @@ Array
 🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
 🔹 Số dòng tìm thấy: 1
 ✅ Đăng nhập thành công! Vai trò: admin
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin
+=== BẮT ĐẦU DEBUG MỚI ===
+❌ Không phải request POST
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01

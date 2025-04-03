@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Cho phép tất cả nguồn
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Cho phép phương thức GET, POST
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Cho phép header cần thiết
 header("Content-Type: application/json");
 require "connect.php"; // Đảm bảo file này đã đúng thông tin kết nối CSDL
 
@@ -100,6 +103,20 @@ function updateEmployee($conn) {
     $MaChucVu = $conn->real_escape_string($data['MaChucVu']);
     $MaPhongban = $conn->real_escape_string($data['MaPhongban']);
 
+    // 🛑 Kiểm tra xem MaPhongban có hợp lệ không
+    if ($MaPhongban == "undefined" || empty($MaPhongban)) {
+        echo json_encode(["success" => false, "message" => "Mã phòng ban không hợp lệ"]);
+        return;
+    }
+
+    // 🛑 Kiểm tra MaPhongban có tồn tại trong bảng phongban không
+    $checkPhongban = mysqli_query($conn, "SELECT * FROM phongban WHERE MaPhongban = '$MaPhongban'");
+    if (mysqli_num_rows($checkPhongban) == 0) {
+        echo json_encode(["success" => false, "message" => "Mã phòng ban không tồn tại"]);
+        return;
+    }
+
+    // Thực hiện UPDATE nếu dữ liệu hợp lệ
     $sql = "UPDATE nhanvien SET 
         HoTen='$HoTen',
         GioiTinh='$GioiTinh',

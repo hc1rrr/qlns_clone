@@ -99,9 +99,9 @@
                 let email = document.getElementById("email").value.trim();
                 let password = document.getElementById("password").value.trim();
                 let loginMessage = document.getElementById("loginMessage");
-            
+
                 loginMessage.textContent = "";
-            
+
                 if (email === "" || password === "") {
                     loginMessage.textContent = "❌ Vui lòng nhập đầy đủ thông tin!";
                     return;
@@ -120,28 +120,29 @@
                 })
                 .then(data => {
                     console.log("Phản hồi từ PHP:", data);
-                
-                    if (data.status === "success") {
-                        alert("✅ " + data.message);
-                                        
-                        // Kiểm tra vai trò và điều hướng
-                        if (data.role === "admin") {
-                            window.location.href = "dashboard.html";  
+
+                        if (data.status === "success") {
+                            alert("✅ " + data.message);
+                        
+                            // Lưu MaNV vào localStorage
+                            localStorage.setItem("MaNV", data.MaNV);  // Lưu với tên trường chính xác
+                        
+                            // Kiểm tra vai trò và điều hướng
+                            if (data.role === "admin") {
+                                window.location.href = "dashboard.html";
+                            } else {
+                                window.location.href = "nvchamcong.html";
+                            }
                         } else {
-                            window.location.href = "nvchamcong.html"; 
-
+                            loginMessage.textContent = "❌ " + data.message;
                         }
-                    } else {
-                        loginMessage.textContent = "❌ " + data.message;
-                    }
-                    
-
                 })
                 .catch(error => {
                     console.error("Lỗi:", error);
                     loginMessage.textContent = "❌ Lỗi kết nối đến máy chủ!";
                 });
             });
+
 
 
             document.querySelector("#email").addEventListener("blur", function () {

@@ -4,83 +4,103 @@ fetch("sidebar.html")
     document.getElementById("sidebar").innerHTML = data;
   });
 
-let currentEditRow = null; // Biến lưu hàng đang sửa
+function fetchDepartments() {
+  console.log("Gọi API lấy danh sách phòng ban...");
+  
+  fetch("http://localhost/qlns_clone/php/getDepartment.php?action=get")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Dữ liệu nhận được:", data);
+
+      const departmentsBody = document.getElementById("departments-body");
+      departmentsBody.innerHTML = ""; 
+      data.forEach((department) => {
+        const newRow = `
+          <tr>
+            <td>${department.MaPhongBan}</td>
+            <td>${department.TenPhongBan}</td>
+            <td>${department.MoTa}</td>
+            <td>
+              <button class="edit-btn" onclick="editDepartment('${department.MaPhongBan}', '${department.TenPhongBan}', '${department.MoTa}')">Sửa</button>
+              <button class="delete-btn" onclick="deleteDepartment('${department.MaPhongBan}')">Xóa</button>
+            </td>
+          </tr>
+        `;
+        departmentsBody.insertAdjacentHTML("beforeend", newRow);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi fetch dữ liệu phòng ban:", error);
+    });
+}
 
 function openModal() {
   document.getElementById("department-modal").style.display = "flex";
+  document.getElementById("modal-title").innerText = "Thêm Phòng Ban";
+  document.getElementById("tenPhongBan").value = "";
+  document.getElementById("moTa").value = "";
+  document.getElementById("save-btn").setAttribute("onclick", "saveDepartment()");
 }
 
 function closeModal() {
   document.getElementById("department-modal").style.display = "none";
-  document.getElementById("tenPhongBan").value = "";
-  document.getElementById("moTa").value = "";
-  currentEditRow = null;
 }
 
-window.onclick = function (event) {
-  let modal = document.getElementById("department-modal");
-  if (event.target === modal) {
-    closeModal();
-  }
-};
-
-function saveDepartment() {
+function saveDepartment(maPhongBan = null) {
   const tenPhongBan = document.getElementById("tenPhongBan").value;
   const moTa = document.getElementById("moTa").value;
 
-  if (!tenPhongBan || !moTa) {
-    alert("Bạn cần nhập đủ thông tin");
+  if (!tenPhongBan) {
+    alert("Bạn cần nhập tên phòng ban");
     return;
   }
 
-  if (tenPhongBan && moTa) {
-    if (currentEditRow) {
-      // Cập nhật hàng hiện tại với dữ liệu mới
-      currentEditRow.cells[1].innerText = tenPhongBan;
-      currentEditRow.cells[2].innerText = moTa;
-    } else {
-      const rows = document.querySelectorAll("#departments-body tr");
-      const departmentCount = rows.length + 1;
+  let url = "http://localhost/qlns_clone/php/getDepartment.php?action=" + (maPhongBan ? "update" : "add");
+  let method = maPhongBan ? "PUT" : "POST";
+  let data = { tenPhongBan, moTa };
 
-      const newRow = `<tr>
-                          <td>PB${String(departmentCount).padStart(2, "0")}</td>
-                          <td>${tenPhongBan}</td>
-                          <td>${moTa}</td>
-                          <td>
-                              <button class="edit-btn" onclick="editDepartment(this)">Sửa</button>
-                              <button class="delete-btn" onclick="deleteDepartment(this)">Xóa</button>
-                          </td>
-                      </tr>`;
+  if (maPhongBan) data.maPhongBan = maPhongBan;
 
-      document
-        .getElementById("departments-body")
-        .insertAdjacentHTML("beforeend", newRow);
-    }
-    closeModal();
-    updateIDs();
-  }
+  fetch(url, {
+    method: method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      alert(result.message);
+      if (result.success) {
+        closeModal();
+        fetchDepartments();
+      }
+    })
+    .catch((error) => console.error("Lỗi:", error));
 }
 
-function editDepartment(button) {
-  currentEditRow = button.closest("tr");
-  const tenPhongBan = currentEditRow.cells[1].innerText;
-  const moTa = currentEditRow.cells[2].innerText;
-
+function editDepartment(maPhongBan, tenPhongBan, moTa) {
+  openModal();
+  document.getElementById("modal-title").innerText = "Sửa Phòng Ban";
   document.getElementById("tenPhongBan").value = tenPhongBan;
   document.getElementById("moTa").value = moTa;
-
-  document.getElementById("modal-title").innerText = "Sửa Phòng Ban";
-  openModal();
+  document.getElementById("save-btn").setAttribute("onclick", `saveDepartment('${maPhongBan}')`);
 }
 
-function deleteDepartment(button) {
-  button.closest("tr").remove();
-  updateIDs();
+function deleteDepartment(maPhongBan) {
+  if (!confirm("Bạn có chắc muốn xóa phòng ban này?")) return;
+
+  fetch("http://localhost/qlns_clone/php/getDepartment.php?action=delete", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ maPhongBan }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      alert(result.message);
+      if (result.success) {
+        fetchDepartments();
+      }
+    })
+    .catch((error) => console.error("Lỗi:", error));
 }
 
-function updateIDs() {
-  const rows = document.querySelectorAll("#departments-body tr");
-  rows.forEach((row, index) => {
-    row.cells[0].innerText = `PB${String(index + 1).padStart(2, "0")}`;
-  });
-}
+document.addEventListener("DOMContentLoaded", fetchDepartments);
