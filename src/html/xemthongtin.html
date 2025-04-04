@@ -1,59 +1,94 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" asd="width=device-width, initial-scale=1.0" />
     <title>Xem thông tin cá nhân</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="../css/xemthongtin.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div id="sidebar"></div>
 
     <main class="content">
-      <div class="container">
-        <div class="table-container">
-          <h3>Thông tin cá nhân</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Mã NV</th>
-                <th>Tên NV</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>Địa chỉ</th>
-                <th>Email</th>
-                <th>SDT</th>
-                <th>Chức vụ</th>
-                <th>Phòng ban</th>
-                <th>Lương</th>
-              </tr>
-            </thead>
-            <tbody id="employee-body">
-              <tr>
-                <td>NV001</td>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>1990-05-15</td>
-                <td>123 Đường ABC, TP.HCM</td>
-                <td>user1@sonat.com</td>
-                <td>0912345678</td>
-                <td>Nhân viên</td>
-                <td>Hành chính</td>
-                <td>10,000,000</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="container">
+            <div class="table-container">
+                <h3>Thông tin cá nhân</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã NV</th>
+                            <th>Tên NV</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Địa chỉ</th>
+                            <th>SDT</th>
+                            <th>Chức vụ</th>
+                            <th>Phòng ban</th>
+                            <th>Lương</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nhanvien-table">
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </main>
 
     <script>
-      fetch("sidebar2.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("sidebar").innerHTML = data;
+        // Tải sidebar
+        fetch("sidebar2.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("sidebar").innerHTML = data;
+            })
+            .catch(error => console.error("Lỗi tải sidebar:", error));
+
+        // Tải dữ liệu nhân viên
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("http://localhost/qlns_clone/php/information.php?action=get")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dữ liệu trả về từ API:", data); // Kiểm tra dữ liệu
+
+                    let tableBody = document.getElementById("nhanvien-table");
+                    tableBody.innerHTML = ""; // Xóa dữ liệu tĩnh ban đầu
+
+                    if (Array.isArray(data)) {
+                        data.forEach(nv => {
+                            // Định dạng lại ngày sinh
+                            const ngaySinh = nv.NgaySinh.split('-');
+                            const ngaySinhFormatted = `${ngaySinh[2]}-${ngaySinh[1]}-${ngaySinh[0]}`;
+
+                            let row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${nv.MaNhanVien}</td>
+                                <td>${nv.HoTen}</td>
+                                <td>${nv.GioiTinh}</td>
+                                <td>${ngaySinhFormatted}</td>
+                                <td>${nv.DiaChi}</td>
+                                <td>${nv.SDT}</td>
+                                <td>${nv.MaChucVu}</td>
+                                <td>${nv.MaPhongban}</td>
+                                <td>${nv.Luong || ''}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    } else {
+                        console.error("Dữ liệu trả về không phải là mảng:", data);
+                        alert("Lỗi: Dữ liệu trả về không đúng định dạng.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi kết nối CSDL:", error);
+                    alert("Đã xảy ra lỗi khi kết nối với server.");
+                });
         });
     </script>
-  </body>
+</body>
 </html>
