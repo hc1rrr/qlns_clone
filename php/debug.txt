@@ -390,3 +390,69 @@ Array
 🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
 🔹 Số dòng tìm thấy: 1
 ✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user2@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user2@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV02
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin | MaNV: NV06
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => user1@sonat.com
+    [password] => user123
+)
+
+🔹 Truy vấn SQL: SELECT MaNV, Email, VaiTro FROM nguoidung WHERE Email = 'user1@sonat.com' AND MatKhau = 'user123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: not admin | MaNV: NV01

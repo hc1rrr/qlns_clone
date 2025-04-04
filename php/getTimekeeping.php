@@ -2,84 +2,148 @@
 header("Content-Type: application/json");
 require "connect.php"; // Kết nối CSDL
 
-$action = $_GET['action'] ?? ''; // Lấy action từ yêu cầu GET, mặc định là rỗng nếu không có action
-$maNV = $_GET['MaNV'] ?? ''; // Lấy MaNV từ yêu cầu GET
+$logFile = "debug3.txt"; // File debug
+
+// Nhận dữ liệu từ JSON nếu là POST
+$inputData = json_decode(file_get_contents("php://input"), true);
+file_put_contents($logFile, "Raw input:\n" . print_r($inputData, true) . "\n", FILE_APPEND);
+
+// Xác định method GET hoặc POST
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method === "POST") {
+    $action = $inputData['action'] ?? '';
+    $maNV = $inputData['MaNV'] ?? '';
+} else {
+    $action = $_GET['action'] ?? '';
+    $maNV = $_GET['MaNV'] ?? '';
+}
 
 if (!$maNV) {
+    file_put_contents($logFile, "Lỗi: MaNV không được cung cấp\n", FILE_APPEND);
     echo json_encode(["success" => false, "message" => "MaNV không được cung cấp"]);
     exit;
 }
 
 if ($action == 'chamCongIn') {
-    // Xử lý chấm công vào
-    $gioVao = $_GET['ThoiGianVao'] ?? ''; // Lấy giờ vào
-    $ngay = $_GET['Ngay'] ?? ''; // Lấy ngày
+    // Lấy dữ liệu từ frontend
+    $gioVao = $inputData['ThoiGianVao'] ?? '';
+    $ngay = $inputData['Ngay'] ?? '';
+    $maNV = $inputData['MaNV'] ?? '';
 
-    if (!$gioVao || !$ngay) {
+    file_put_contents($logFile, "==== [Chấm công vào] ====\n", FILE_APPEND);
+    file_put_contents($logFile, "Dữ liệu từ frontend: " . json_encode($inputData) . "\n", FILE_APPEND);
+
+    // Kiểm tra dữ liệu hợp lệ
+    if (!$gioVao || !$ngay || !$maNV) {
+        file_put_contents($logFile, "❌ Thiếu dữ liệu giờ vào, ngày hoặc mã nhân viên\n", FILE_APPEND);
         echo json_encode(["success" => false, "message" => "Dữ liệu không đầy đủ cho chấm công vào"]);
         exit;
     }
 
-    // Thêm dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO chamcong (MaNhanVien, Ngay, GioVao) VALUES ('$maNV', '$ngay', '$gioVao')";
-    if ($conn->query($sql) === TRUE) {
-        echo json_encode(["success" => true, "message" => "Chấm công vào thành công"]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Lỗi khi chấm công vào: " . $conn->error]);
-    }
-    exit;
-} 
-
-if ($action == 'chamCongOut') {
-    // Xử lý chấm công ra
-    $gioRa = $_GET['ThoiGianRa'] ?? ''; // Lấy giờ ra
-    $ngayRa = $_GET['Ngay'] ?? ''; // Lấy ngày ra
-
-    if (!$gioRa || !$ngayRa) {
-        echo json_encode(["success" => false, "message" => "Dữ liệu không đầy đủ cho chấm công ra"]);
+    // 1. Truy vấn tên nhân viên từ MaNV
+    $sqlGetTenNV = "SELECT TenNhanVien FROM chamcong WHERE MaNhanVien = '$maNV' LIMIT 1";
+    file_put_contents($logFile, "SQL get TenNhanVien: $sqlGetTenNV\n", FILE_APPEND);
+    $resultTenNV = $conn->query($sqlGetTenNV);
+    if (!$resultTenNV || $resultTenNV->num_rows == 0) {
+        file_put_contents($logFile, "❌ Không tìm thấy tên nhân viên cho MaNV = $maNV\n", FILE_APPEND);
+        echo json_encode(["success" => false, "message" => "Không tìm thấy nhân viên"]);
         exit;
     }
+    $tenNV = $resultTenNV->fetch_assoc()['TenNhanVien'];
 
-    // Tính giờ công và tăng ca
-    $sql = "SELECT GioVao FROM chamcong WHERE MaNhanVien = '$maNV' AND GioRa IS NULL AND Ngay = '$ngayRa' LIMIT 1";
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $gioVao = $row['GioVao'];
+    // 2. Lấy mã chấm công cuối cùng và tạo mã mới
+    $sqlLastCode = "SELECT MaChamCong FROM chamcong ORDER BY MaChamCong DESC LIMIT 1";
+    file_put_contents($logFile, "SQL get last MaChamCong: $sqlLastCode\n", FILE_APPEND);
+    $resultLastCode = $conn->query($sqlLastCode);
+    $lastCode = "CC00"; // Nếu chưa có mã chấm công nào
+    if ($resultLastCode && $row = $resultLastCode->fetch_assoc()) {
+        $lastCode = $row['MaChamCong'];
+    }
 
-        // Tính giờ công và tăng ca
-        $gioVaoTime = strtotime($gioVao);
-        $gioRaTime = strtotime($gioRa);
+    $number = intval(substr($lastCode, 2)) + 1;
+    $newCode = 'CC' . str_pad($number, 2, '0', STR_PAD_LEFT);
+    file_put_contents($logFile, "Mã chấm công mới: $newCode\n", FILE_APPEND);
 
-        $gioCong = round(($gioRaTime - $gioVaoTime) / 3600, 2); // Tính giờ công (số giờ)
-        $tangCa = $gioCong - 8; // Tính tăng ca (giờ công - 8)
+    // 3. Câu lệnh INSERT vào bảng chamcong
+    $sqlInsert = "INSERT INTO chamcong (MaChamCong, MaNhanVien, TenNhanVien, Ngay, GioVao)
+                  VALUES ('$newCode', '$maNV', '$tenNV', '$ngay', '$gioVao')";
+    file_put_contents($logFile, "SQL INSERT: $sqlInsert\n", FILE_APPEND);
 
-        // Cập nhật thông tin chấm công ra và giờ công, tăng ca vào cơ sở dữ liệu
-        $sqlUpdate = "UPDATE chamcong SET GioRa = '$gioRa', GioCong = '$gioCong', TangCa = '$tangCa' WHERE MaNhanVien = '$maNV' AND GioRa IS NULL AND Ngay = '$ngayRa'";
-        if ($conn->query($sqlUpdate) === TRUE) {
-            echo json_encode(["success" => true, "message" => "Chấm công ra thành công"]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Lỗi khi chấm công ra: " . $conn->error]);
-        }
+    if ($conn->query($sqlInsert) === TRUE) {
+        file_put_contents($logFile, "✅ Thành công: Đã chấm công vào\n", FILE_APPEND);
+        echo json_encode(["success" => true, "message" => "Chấm công vào thành công"]);
     } else {
-        echo json_encode(["success" => false, "message" => "Không tìm thấy chấm công vào tương ứng"]);
+        file_put_contents($logFile, "❌ Lỗi khi insert: " . $conn->error . "\n", FILE_APPEND);
+        echo json_encode(["success" => false, "message" => "Lỗi khi chấm công vào: " . $conn->error]);
     }
     exit;
 }
 
-// Nếu không có action, trả về dữ liệu chấm công của nhân viên
-$sql = "SELECT * FROM chamcong WHERE MaNhanVien = '$maNV'"; // Truy vấn các bản ghi chấm công của MaNV
+
+
+
+
+if ($action == 'chamCongOut') {
+    // Lấy dữ liệu từ frontend
+    $gioRa = $inputData['ThoiGianRa'] ?? '';
+    $ngay = $inputData['Ngay'] ?? '';
+    $maNV = $inputData['MaNV'] ?? '';
+
+    file_put_contents($logFile, "==== [Chấm công ra] ====\n", FILE_APPEND);
+    file_put_contents($logFile, "Dữ liệu từ frontend: " . json_encode($inputData) . "\n", FILE_APPEND);
+
+    // Kiểm tra dữ liệu hợp lệ
+    if (!$gioRa || !$ngay || !$maNV) {
+        file_put_contents($logFile, "❌ Thiếu dữ liệu giờ ra, ngày hoặc mã nhân viên\n", FILE_APPEND);
+        echo json_encode(["success" => false, "message" => "Dữ liệu không đầy đủ cho chấm công ra"]);
+        exit;
+    }
+
+    // Truy vấn bản ghi có cùng MaNhanVien và Ngay
+    $sqlGetChamCong = "SELECT * FROM chamcong WHERE MaNhanVien = '$maNV' AND Ngay = '$ngay' LIMIT 1";
+    file_put_contents($logFile, "SQL get cham cong: $sqlGetChamCong\n", FILE_APPEND);
+    $resultGetChamCong = $conn->query($sqlGetChamCong);
+
+    if (!$resultGetChamCong || $resultGetChamCong->num_rows == 0) {
+        file_put_contents($logFile, "❌ Không tìm thấy bản ghi chấm công cho MaNV = $maNV và Ngày = $ngay\n", FILE_APPEND);
+        echo json_encode(["success" => false, "message" => "Không tìm thấy bản ghi chấm công"]);
+        exit;
+    }
+
+    // Cập nhật giờ ra vào bản ghi chấm công
+    $sqlUpdate = "UPDATE chamcong SET GioRa='$gioRa' WHERE MaNhanVien='$maNV' AND Ngay='$ngay'";
+    file_put_contents($logFile, "SQL UPDATE: $sqlUpdate\n", FILE_APPEND);
+
+    if ($conn->query($sqlUpdate) === TRUE) {
+        file_put_contents($logFile, "✅ Thành công: Đã cập nhật giờ ra\n", FILE_APPEND);
+        echo json_encode(["success" => true, "message" => "Chấm công ra thành công"]);
+    } else {
+        file_put_contents($logFile, "❌ Lỗi khi cập nhật giờ ra: " . $conn->error . "\n", FILE_APPEND);
+        echo json_encode(["success" => false, "message" => "Lỗi khi cập nhật giờ ra"]);
+    }
+    exit;
+}
+
+
+
+// Nếu không có action -> Lấy danh sách chấm công của nhân viên
+$sql = "SELECT * FROM chamcong WHERE MaNhanVien = '$maNV'";
+file_put_contents($logFile, "SQL Lấy danh sách chấm công:\n$sql\n", FILE_APPEND);
+
 $result = $conn->query($sql);
 
 $timekeepingData = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $timekeepingData[] = $row; // Thêm từng bản ghi vào mảng
+        $timekeepingData[] = $row;
     }
+    file_put_contents($logFile, "Đã trả về " . count($timekeepingData) . " bản ghi\n", FILE_APPEND);
+} else {
+    file_put_contents($logFile, "Không có bản ghi nào được tìm thấy\n", FILE_APPEND);
 }
 
-echo json_encode($timekeepingData); // Trả dữ liệu về frontend
+echo json_encode($timekeepingData);
 $conn->close();
 ?>

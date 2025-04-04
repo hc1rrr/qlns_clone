@@ -30,19 +30,21 @@
     <!-- Modal Chấm Công Ra -->
     <div id="myModalOut" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>Chấm công ra</h2>
-            <form id="chamCongOutForm">
-                <label for="thoiGianRa">Thời gian ra:</label>
-                <input type="time" id="thoiGianRa" required>
-    
-                <label for="dateOut">Ngày tháng:</label>
-                <input type="date" id="dateOut" required>
-
-                <button onclick="chamCongOutOut()"  type="submit">Xác nhận</button>
-            </form>
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <h2>Chấm công ra</h2>
+          <form id="chamCongOutForm">
+            <label for="thoiGianRa">Thời gian ra:</label>
+            <input type="time" id="thoiGianRa" required>
+        
+            <label for="dateOut">Ngày tháng:</label>
+            <input type="date" id="dateOut" required>
+        
+            <!-- KHÔNG dùng onclick ở đây nữa -->
+            <button type="submit">Xác nhận</button>
+          </form>
         </div>
-    </div>
+      </div>
+      
 
     <main class="content">
         <div class="container">

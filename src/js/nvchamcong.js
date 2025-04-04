@@ -141,27 +141,20 @@ function chamCongIn() {
 
 // Gửi dữ liệu chấm công ra
 function chamCongOut() {
-  const thoiGianRa = document.getElementById("thoiGianRa").value;
+  const gioRa = document.getElementById("thoiGianRa").value; // Đúng ID
   const dateOut = document.getElementById("dateOut").value;
   const maNV = localStorage.getItem("MaNV");
-  const tenNV = localStorage.getItem("TenNV");
 
-  if (!maNV || !tenNV) {
-    alert("Không có thông tin nhân viên!");
+  if (!maNV) {
+    alert("Không tìm thấy mã nhân viên!");
     return;
   }
-
-  const thoiGianVao = document.querySelector(`#attendances-body tr[data-ma-nv="${maNV}"] td:nth-child(3)`).textContent;
-  const { workingHours, overtimeHours } = calculateWorkingHours(thoiGianVao, thoiGianRa, dateOut);
 
   const data = {
     action: "chamCongOut",
     MaNV: maNV,
-    TenNV: tenNV,
-    ThoiGianRa: thoiGianRa,
-    Ngay: dateOut,
-    GioCong: workingHours,
-    TangCa: overtimeHours
+    ThoiGianRa: gioRa,
+    Ngay: dateOut
   };
 
   fetch("http://localhost/qlns_clone/php/getTimekeeping.php", {
@@ -176,13 +169,14 @@ function chamCongOut() {
     if (result.success) {
       alert("Chấm công ra thành công!");
       closeModal();
-      fetchTimekeeping();
+      fetchTimekeeping(); // Reload lại bảng
     } else {
       alert("Chấm công ra không thành công!");
     }
   })
   .catch(error => console.error("Lỗi khi gửi dữ liệu:", error));
 }
+
 
 // Hàm fetch dữ liệu chấm công
 function fetchTimekeeping() {
@@ -227,3 +221,14 @@ function fetchTimekeeping() {
 
 // Gọi hàm khi trang web được tải
 document.addEventListener("DOMContentLoaded", fetchTimekeeping);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const chamCongOutForm = document.getElementById("chamCongOutForm");
+  if (chamCongOutForm) {
+    chamCongOutForm.addEventListener("submit", function (e) {
+      e.preventDefault(); // Ngăn hành vi reload
+      chamCongOut();      // Gọi hàm
+    });
+  }
+});
