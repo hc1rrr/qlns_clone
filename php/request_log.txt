@@ -78,3 +78,15 @@ Action: get
 Request Data: 
 Action: get
 Request Data: 
+Action: get
+Request Data: 
+Action: delete
+Request Data: {"maChamCong":"CC08"}
+Delete Attendance Data: {"maChamCong":"CC08"}
+Action: update
+Request Data: {"maChamCong":"CC07","tenPhongBan":"Nguyễn Văn Am","thoiGianVao":"11:41:00","thoiGianRa":"23:46:00","date":"2025-04-04"}
+Update Attendance Data: {"maChamCong":"CC07","tenPhongBan":"Nguy\u1ec5n V\u0103n Am","thoiGianVao":"11:41:00","thoiGianRa":"23:46:00","date":"2025-04-04"}
+Action: get
+Request Data: 
+Action: get
+Request Data: 

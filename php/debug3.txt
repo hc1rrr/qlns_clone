@@ -174,3 +174,88 @@ Raw input:
 SQL Lấy danh sách chấm công:
 SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
 Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 5 bản ghi
+Raw input:
+
+Raw input:
+Array
+(
+    [action] => chamCongIn
+    [MaNV] => NV01
+    [ThoiGianVao] => 22:42
+    [Ngay] => 2025-04-04
+)
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+==== [Chấm công vào] ====
+Dữ liệu từ frontend: {"action":"chamCongIn","MaNV":"NV01","ThoiGianVao":"22:42","Ngay":"2025-04-04"}
+SQL get TenNhanVien: SELECT TenNhanVien FROM chamcong WHERE MaNhanVien = 'NV01' LIMIT 1
+Đã trả về 5 bản ghi
+SQL get last MaChamCong: SELECT MaChamCong FROM chamcong ORDER BY MaChamCong DESC LIMIT 1
+Mã chấm công mới: CC08
+SQL INSERT: INSERT INTO chamcong (MaChamCong, MaNhanVien, TenNhanVien, Ngay, GioVao)
+                  VALUES ('CC08', 'NV01', 'Nguyễn Văn A', '2025-04-04', '22:42')
+✅ Thành công: Đã chấm công vào
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 5 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongIn
+    [MaNV] => NV01
+    [ThoiGianVao] => 22:42
+    [Ngay] => 
+)
+
+==== [Chấm công vào] ====
+Dữ liệu từ frontend: {"action":"chamCongIn","MaNV":"NV01","ThoiGianVao":"22:42","Ngay":""}
+❌ Thiếu dữ liệu giờ vào, ngày hoặc mã nhân viên
+Raw input:
+Array
+(
+    [action] => chamCongIn
+    [MaNV] => NV01
+    [ThoiGianVao] => 22:42
+    [Ngay] => 2025-04-04
+)
+
+==== [Chấm công vào] ====
+Dữ liệu từ frontend: {"action":"chamCongIn","MaNV":"NV01","ThoiGianVao":"22:42","Ngay":"2025-04-04"}
+SQL get TenNhanVien: SELECT TenNhanVien FROM chamcong WHERE MaNhanVien = 'NV01' LIMIT 1
+SQL get last MaChamCong: SELECT MaChamCong FROM chamcong ORDER BY MaChamCong DESC LIMIT 1
+Mã chấm công mới: CC09
+SQL INSERT: INSERT INTO chamcong (MaChamCong, MaNhanVien, TenNhanVien, Ngay, GioVao)
+                  VALUES ('CC09', 'NV01', 'Nguyễn Văn A', '2025-04-04', '22:42')
+✅ Thành công: Đã chấm công vào
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongOut
+    [MaNV] => NV01
+    [ThoiGianRa] => 10:43
+    [Ngay] => 2025-04-04
+)
+
+==== [Chấm công ra] ====
+Dữ liệu từ frontend: {"action":"chamCongOut","MaNV":"NV01","ThoiGianRa":"10:43","Ngay":"2025-04-04"}
+SQL get cham cong: SELECT * FROM chamcong WHERE MaNhanVien = 'NV01' AND Ngay = '2025-04-04' LIMIT 1
+SQL UPDATE: UPDATE chamcong SET GioRa='10:43' WHERE MaNhanVien='NV01' AND Ngay='2025-04-04'
+✅ Thành công: Đã cập nhật giờ ra
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
