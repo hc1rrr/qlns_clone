@@ -231,3 +231,14 @@ Array
 🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
 🔹 Số dòng tìm thấy: 1
 ✅ Đăng nhập thành công! Vai trò: admin
+=== BẮT ĐẦU DEBUG MỚI ===
+🔹 Dữ liệu nhận được từ HTML:
+Array
+(
+    [email] => admin@sonat.com
+    [password] => admin123
+)
+
+🔹 Truy vấn SQL: SELECT Email, VaiTro FROM nguoidung WHERE Email = 'admin@sonat.com' AND MatKhau = 'admin123'
+🔹 Số dòng tìm thấy: 1
+✅ Đăng nhập thành công! Vai trò: admin
