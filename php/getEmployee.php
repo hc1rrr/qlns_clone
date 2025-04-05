@@ -39,7 +39,7 @@ $conn->close();
 
 // Hàm lấy danh sách nhân viên
 function getEmployee($conn) {
-    $sql = "SELECT MaNhanVien, HoTen, GioiTinh, NgaySinh, DiaChi, SDT, MaChucVu, MaPhongban FROM nhanvien";
+    $sql = "SELECT MaNhanVien, HoTen, GioiTinh, NgaySinh, DiaChi, SDT, MaChucVu, MaPhongban, Luong FROM nhanvien";
     $result = $conn->query($sql);
 
     if (!$result) {
@@ -102,6 +102,7 @@ function updateEmployee($conn) {
     $SDT = $conn->real_escape_string($data['SDT']);
     $MaChucVu = $conn->real_escape_string($data['MaChucVu']);
     $MaPhongban = $conn->real_escape_string($data['MaPhongban']);
+    $Luong = $conn->real_escape_string($data['Luong']);
 
     // 🛑 Kiểm tra xem MaPhongban có hợp lệ không
     if ($MaPhongban == "undefined" || empty($MaPhongban)) {
@@ -124,7 +125,8 @@ function updateEmployee($conn) {
         DiaChi='$DiaChi',
         SDT='$SDT',
         MaChucVu='$MaChucVu',
-        MaPhongban='$MaPhongban'
+        MaPhongban='$MaPhongban',
+        Luong='$Luong'
         WHERE MaNhanVien='$MaNhanVien'";
 
     if ($conn->query($sql) === TRUE) {

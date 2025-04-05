@@ -1,6 +1,6 @@
 === BẮT ĐẦU DEBUG MỚI ===
 Số nhân viên: 20
-Số chức vụ: 4
+Số chức vụ: 5
 Số phòng ban: 4
 Danh sách chức vụ: Array
 (
@@ -8,6 +8,7 @@ Danh sách chức vụ: Array
     [Trưởng phòng] => 4
     [Nhân viên] => 8
     [Thực tập sinh] => 4
+    [Cộng tác viên] => 0
 )
 
 Danh sách phòng ban: Array

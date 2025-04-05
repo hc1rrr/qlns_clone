@@ -259,3 +259,155 @@ Raw input:
 SQL Lấy danh sách chấm công:
 SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
 Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongIn
+    [MaNV] => NV01
+    [ThoiGianVao] => 06:10
+    [Ngay] => 2025-04-05
+)
+
+==== [Chấm công vào] ====
+Dữ liệu từ frontend: {"action":"chamCongIn","MaNV":"NV01","ThoiGianVao":"06:10","Ngay":"2025-04-05"}
+SQL get TenNhanVien: SELECT TenNhanVien FROM chamcong WHERE MaNhanVien = 'NV01' LIMIT 1
+SQL get last MaChamCong: SELECT MaChamCong FROM chamcong ORDER BY MaChamCong DESC LIMIT 1
+Mã chấm công mới: CC10
+SQL INSERT: INSERT INTO chamcong (MaChamCong, MaNhanVien, TenNhanVien, Ngay, GioVao)
+                  VALUES ('CC10', 'NV01', 'Nguyễn Văn A', '2025-04-05', '06:10')
+✅ Thành công: Đã chấm công vào
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 7 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 7 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongOut
+    [MaNV] => NV01
+    [ThoiGianRa] => 17:09
+    [Ngay] => 2025-04-05
+)
+
+==== [Chấm công ra] ====
+Dữ liệu từ frontend: {"action":"chamCongOut","MaNV":"NV01","ThoiGianRa":"17:09","Ngay":"2025-04-05"}
+SQL get cham cong: SELECT * FROM chamcong WHERE MaNhanVien = 'NV01' AND Ngay = '2025-04-05' LIMIT 1
+SQL UPDATE: UPDATE chamcong SET GioRa='17:09' WHERE MaNhanVien='NV01' AND Ngay='2025-04-05'
+✅ Thành công: Đã cập nhật giờ ra
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 7 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 7 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 5 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongIn
+    [MaNV] => NV01
+    [ThoiGianVao] => 08:36
+    [Ngay] => 2025-04-05
+)
+
+==== [Chấm công vào] ====
+Dữ liệu từ frontend: {"action":"chamCongIn","MaNV":"NV01","ThoiGianVao":"08:36","Ngay":"2025-04-05"}
+SQL get TenNhanVien: SELECT TenNhanVien FROM chamcong WHERE MaNhanVien = 'NV01' LIMIT 1
+SQL get last MaChamCong: SELECT MaChamCong FROM chamcong ORDER BY MaChamCong DESC LIMIT 1
+Mã chấm công mới: CC11
+SQL INSERT: INSERT INTO chamcong (MaChamCong, MaNhanVien, TenNhanVien, Ngay, GioVao)
+                  VALUES ('CC11', 'NV01', 'Nguyễn Văn A', '2025-04-05', '08:36')
+✅ Thành công: Đã chấm công vào
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+Array
+(
+    [action] => chamCongOut
+    [MaNV] => NV01
+    [ThoiGianRa] => 17:30
+    [Ngay] => 2025-04-05
+)
+
+==== [Chấm công ra] ====
+Dữ liệu từ frontend: {"action":"chamCongOut","MaNV":"NV01","ThoiGianRa":"17:30","Ngay":"2025-04-05"}
+SQL get cham cong: SELECT * FROM chamcong WHERE MaNhanVien = 'NV01' AND Ngay = '2025-04-05' LIMIT 1
+SQL UPDATE: UPDATE chamcong SET GioRa='17:30' WHERE MaNhanVien='NV01' AND Ngay='2025-04-05'
+✅ Thành công: Đã cập nhật giờ ra
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi
+Raw input:
+
+SQL Lấy danh sách chấm công:
+SELECT * FROM chamcong WHERE MaNhanVien = 'NV01'
+Đã trả về 6 bản ghi

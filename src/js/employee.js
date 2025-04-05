@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   function loadEmployees() {
-    fetch("http://localhost/qlns_clone-main/php/getEmployee.php?action=get")
+    fetch("http://localhost/qlns_clone/php/getEmployee.php?action=get")
         .then(response => response.json())
         .then(data => {
             if (data.success && Array.isArray(data.data)) {
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${employee.SDT}</td>
                         <td>${employee.MaChucVu}</td>
                         <td>${employee.MaPhongban}</td>
-                        <td>${employee.Luong ?? "Chưa cập nhật"}</td>
+                        <td>${employee.Luong }</td>
                         <td>
                             <button class="edit-btn" onclick="editEmployee('${employee.MaNhanVien}')">Sửa</button>
                             <button class="delete-btn" onclick="deleteEmployee('${employee.MaNhanVien}')">Xóa</button>
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
       }
     
-      fetch("http://localhost/qlns_clone-main/php/getEmployee.php?action=add", {
+      fetch("http://localhost/qlns_clone/php/getEmployee.php?action=add", {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function deleteEmployee(maNhanVien) {
       if (!confirm("Bạn có chắc muốn xóa nhân viên này?")) return;
   
-      fetch("http://localhost/qlns_clone-main/php/getEmployee.php?action=delete", {
+      fetch("http://localhost/qlns_clone/php/getEmployee.php?action=delete", {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
           Luong: document.getElementById("employee-salary").value.replace(/[^0-9]/g, "")
       };
   
-      fetch("http://localhost/qlns_clone-main/php/getEmployee.php?action=update", {
+      fetch("http://localhost/qlns_clone/php/getEmployee.php?action=update", {
           method: "POST",  // Hoặc "PUT" nếu API hỗ trợ
           headers: {
               "Content-Type": "application/json"
